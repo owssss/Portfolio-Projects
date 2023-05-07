@@ -1,3 +1,5 @@
+--Create a table for yellevate
+
 CREATE TABLE IF NOT EXISTS yellevate_invoices (
 	country varchar,
 	customer_id varchar,
@@ -11,10 +13,12 @@ CREATE TABLE IF NOT EXISTS yellevate_invoices (
 	days_settled integer,
 	days_late integer
 )
+--import the csv file into the table
 
 SELECT * FROM yellevate_invoices
 
---checking
+--checking duplicates, spelling, and other discrepancies.
+
 SELECT country FROM yellevate_invoices
 GROUP BY country
 
@@ -25,6 +29,7 @@ SELECT country, customer_id FROM yellevate_invoices
 GROUP BY country, customer_id
 
 --updating the table
+
 ALTER TABLE yellevate_invoices
 ADD COLUMN disputed_upd varchar
 
@@ -100,11 +105,13 @@ SET remarks = CASE
 	ELSE 'Delayed'
 END
 
---1
+-- finding the average days in which invoices are settle
+
 SELECT round(AVG(days_settled),0)
 FROM yellevate_invoices
 
---2
+--finding the average days in which dispute invoices are settled
+
 SELECT disputed_upd, settled_date, days_settled
 FROM yellevate_invoices
 WHERE disputed_upd= 'disputed invoices'
@@ -114,8 +121,7 @@ SELECT round(AVG(days_settleD),0)
 FROM yellevate_invoices
 WHERE disputed_upd= 'disputed invoices'
 
---3
-THE COMPANY LOST
+--3 finding the percentage of company loss against the total invoices
 
 SELECT disputed_upd, disputed_lost
 FROM yellevate_invoices
@@ -142,7 +148,7 @@ GROUP BY disputed_lost
 
 PERCENTAGE = (101/2466) * 100 = 4.10%
 
---4
+--4 finding the percentage of company's revenue loss against total revenue
 
 --TOTAL REVENUE LOST FROM DISPUTES - $690,167
 
@@ -167,7 +173,7 @@ FROM yellevate_invoices
 
 SELECT round((690167.0/14770318.0)*100,2) AS "revenue from all invoices"
 
---5 
+--5 which country is responsible for the highest loss in revenue and disputes
 
 SELECT country, invoice_amount
 FROM  yellevate_invoices
