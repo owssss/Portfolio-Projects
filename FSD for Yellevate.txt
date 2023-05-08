@@ -1,0 +1,10 @@
+
+1. Create a Dashboard where there is a data of average time of settled invoice
+
+2. the dashboard should also have the data of average time of settled disputed invoice
+
+3. the dashboard must show the country in which highest losses occurs.
+
+4. the dashboard should be in microsoft excel
+
+5. Dashboard should also have an interactive slicer for more data
